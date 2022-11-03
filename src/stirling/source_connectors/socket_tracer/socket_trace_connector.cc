@@ -82,23 +82,23 @@ DEFINE_int32(stirling_enable_http_tracing, px::stirling::TraceMode::On,
              "If true, stirling will trace and process HTTP messages");
 DEFINE_int32(stirling_enable_http2_tracing, px::stirling::TraceMode::On,
              "If true, stirling will trace and process gRPC RPCs.");
-DEFINE_int32(stirling_enable_mysql_tracing, px::stirling::TraceMode::On,
+DEFINE_int32(stirling_enable_mysql_tracing, px::stirling::TraceMode::Off,
              "If true, stirling will trace and process MySQL messages.");
 DEFINE_int32(stirling_enable_pgsql_tracing, px::stirling::TraceMode::On,
              "If true, stirling will trace and process PostgreSQL messages.");
-DEFINE_int32(stirling_enable_cass_tracing, px::stirling::TraceMode::On,
+DEFINE_int32(stirling_enable_cass_tracing, px::stirling::TraceMode::Off,
              "If true, stirling will trace and process Cassandra messages.");
 DEFINE_int32(stirling_enable_dns_tracing, px::stirling::TraceMode::On,
              "If true, stirling will trace and process DNS messages.");
 DEFINE_int32(stirling_enable_redis_tracing, px::stirling::TraceMode::On,
              "If true, stirling will trace and process Redis messages.");
-DEFINE_int32(stirling_enable_nats_tracing, px::stirling::TraceMode::On,
+DEFINE_int32(stirling_enable_nats_tracing, px::stirling::TraceMode::Off,
              "If true, stirling will trace and process NATS messages.");
 DEFINE_int32(stirling_enable_kafka_tracing, px::stirling::TraceMode::On,
              "If true, stirling will trace and process Kafka messages.");
-DEFINE_int32(stirling_enable_mux_tracing, px::stirling::TraceMode::OnForNewerKernel,
+DEFINE_int32(stirling_enable_mux_tracing, px::stirling::TraceMode::Off,
              "If true, stirling will trace and process Mux messages.");
-DEFINE_int32(stirling_enable_amqp_tracing, px::stirling::TraceMode::On,
+DEFINE_int32(stirling_enable_amqp_tracing, px::stirling::TraceMode::Off,
              "If true, stirling will trace and process AMQP messages.");
 
 DEFINE_bool(stirling_disable_self_tracing, true,

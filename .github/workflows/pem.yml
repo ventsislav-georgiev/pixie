@@ -1,0 +1,32 @@
+name: PEM
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch: ~
+
+jobs:
+  build_pem:
+    runs-on: ubuntu-latest
+    container:
+      image: gcr.io/pixie-oss/pixie-dev-public/dev_image_with_extras:202210241510
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: cache bazel
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-bazel
+        with:
+          path: |
+            ~/.cache/bazel
+          key: ${{ runner.os }}-bazel.1
+          restore-keys: |
+            ${{ runner.os }}-bazel-
+      - name: vizier_build_release.sh
+        run: |
+          git config --global --add safe.directory '*'
+          ./ci/vizier_build_release.sh
