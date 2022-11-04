@@ -1423,6 +1423,17 @@ void SocketTraceConnector::AppendMessage(ConnectorContext* ctx, const ConnTracke
   md::UPID upid(ctx->GetASID(), conn_tracker.conn_id().upid.pid,
                 conn_tracker.conn_id().upid.start_time_ticks);
 
+  int64_t api_key = static_cast<int64_t>(record.req.api_key);
+  if (api_key == 2 // kListOffsets
+      || api_key == 3 // kMetadata
+      || api_key == 6 // kUpdateMetadata
+      || api_key == 8 // kOffsetCommit
+      || api_key == 9 // kOffsetFetch
+      || api_key == 10 // kFindCoordinator
+      || api_key == 12) { // kHeartbeat
+    return;
+  }
+
   endpoint_role_t role = conn_tracker.role();
   DataTable::RecordBuilder<&kKafkaTable> r(data_table, record.resp.timestamp_ns);
   r.Append<r.ColIndex("time_")>(record.req.timestamp_ns);
@@ -1430,7 +1441,7 @@ void SocketTraceConnector::AppendMessage(ConnectorContext* ctx, const ConnTracke
   r.Append<r.ColIndex("remote_addr")>(conn_tracker.remote_endpoint().AddrStr());
   r.Append<r.ColIndex("remote_port")>(conn_tracker.remote_endpoint().port());
   r.Append<r.ColIndex("trace_role")>(role);
-  r.Append<r.ColIndex("req_cmd")>(static_cast<int64_t>(record.req.api_key));
+  r.Append<r.ColIndex("req_cmd")>(api_key);
   r.Append<r.ColIndex("client_id")>(std::move(record.req.client_id), FLAGS_max_body_bytes);
   r.Append<r.ColIndex("req_body")>(std::move(record.req.msg), kMaxKafkaBodyBytes);
   r.Append<r.ColIndex("resp")>(std::move(record.resp.msg), kMaxKafkaBodyBytes);
