@@ -53,7 +53,7 @@ struct MessageSet {
   int64_t size = 0;
   std::vector<RecordBatch> record_batches;
 
-  void ToJSON(utils::JSONObjectBuilder* builder, bool omit_record_batches = true) const {
+  void ToJSON(utils::JSONObjectBuilder* builder, bool omit_record_batches = false) const {
     builder->WriteKV("size", size);
     if (!omit_record_batches) {
       builder->WriteKVArrayRecursive<RecordBatch>("record_batchs", record_batches);
