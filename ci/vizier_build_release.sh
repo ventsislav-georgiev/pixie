@@ -21,7 +21,7 @@ set -ex
 printenv
 
 repo_path=$(pwd)
-release_tag=custom.2
+release_tag=custom.3
 versions_file="$(pwd)/src/utils/artifacts/artifact_db_updater/VERSIONS.json"
 
 echo "The release tag is: ${release_tag}"

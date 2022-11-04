@@ -174,10 +174,10 @@ RecordsWithErrorCount<Record> StitchFrames(std::deque<Packet>* req_packets,
       StatusOr<Record> record_status = ProcessReqRespPair(&req_packet, it->second);
       if (record_status.ok()) {
         entries.push_back(record_status.ConsumeValueOrDie());
-      } else {
-        VLOG(1) << record_status.ToString();
-        ++error_count;
-      }
+      }// else {
+        // VLOG(1) << record_status.ToString();
+        // ++error_count;
+      // }
       // Mark the request as consumed, and clean-up when they reach the head of the queue.
       req_packet.consumed = true;
       // Remove resp_packet from map once it's been matched.

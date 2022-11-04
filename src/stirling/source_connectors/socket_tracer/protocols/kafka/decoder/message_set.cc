@@ -118,6 +118,10 @@ StatusOr<MessageSet> PacketDecoder::ExtractMessageSet() {
   // record batches as possible. If an error occurs due to tagged section, we just jump to the
   // correct offset and continue parsing.
 
+  if (message_set.size == 0) {
+    return Status(px::statuspb::Code::CANCELLED, "Message set size is 0.");
+  }
+
   while (offset < message_set.size) {
     auto record_batch_result = ExtractRecordBatch(&offset);
     if (record_batch_result.ok()) {
